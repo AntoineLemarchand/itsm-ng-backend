@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/itsmng/itsm-ng-backend/config"
-	"github.com/itsmng/itsm-ng-backend/internal/model"
+	"github.com/itsmng/itsm-ng-backend/internals/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/gofiber/fiber/v2"
-	userHandler "github.com/itsmng/itsm-ng-backend/internal/handlers/user"
+	userHandler "github.com/itsmng/itsm-ng-backend/internals/handlers/user"
 )
 
 func SetupUserRoutes(router fiber.Router) {

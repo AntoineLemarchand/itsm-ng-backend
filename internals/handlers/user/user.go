@@ -1,10 +1,10 @@
 package userHandler
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
-	"github.com/itsmng/itsm-ng-backend/database"
-	"github.com/itsmng/itsm-ng-backend/internal/model"
+    "github.com/gofiber/fiber/v2"
+    "github.com/google/uuid"
+    "github.com/itsmng/itsm-ng-backend/database"
+    "github.com/itsmng/itsm-ng-backend/internals/model"
 )
 
 func GetUsers(c *fiber.Ctx) error {
@@ -20,13 +20,24 @@ func GetUsers(c *fiber.Ctx) error {
     return c.JSON(fiber.Map{ "status": "success", "message": "Users Found", "data": users})
 }
 
+
+// @Summary         Create a new user
+// @Description     Create a new user
+// @Tags            user
+// @Accept          json
+// @Produce         json
+// @Param           user body           model.AddUser   true    "User object that needs to be created"
+// @Success         200                 {object}        model.UserResponse
+// @Failure         400                 {object}        httputil.HTTPError
+// @Failure         500                 {object}        httputil.HTTPError
+// @Router          /user [post]
 func CreateUser(c *fiber.Ctx) error {
     db := database.DB
     user := new(model.User)
 
     err := c.BodyParser(user)
     if err != nil {
-        return c.Status(500).JSON(fiber.Map{ "status": "error", "message": "Review your input", "data": err})
+        return c.Status(400).JSON(fiber.Map{ "status": "error", "message": "Review your input", "data": err})
     }
 
     user.ID = uuid.New()
