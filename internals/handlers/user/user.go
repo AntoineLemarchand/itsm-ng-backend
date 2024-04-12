@@ -7,6 +7,14 @@ import (
     "github.com/itsmng/itsm-ng-backend/internals/model"
 )
 
+// @Summary         Get all users
+// @Description     Get all users
+// @Tags            user
+// @Accept          json
+// @Produce         json
+// @Success         200                 {object}        []model.UserResponse
+// @Failure         404                 {object}        httputil.HTTPError
+// @Router          /api/user [get]
 func GetUsers(c *fiber.Ctx) error {
     db := database.DB
     users := []model.User{}
@@ -30,7 +38,7 @@ func GetUsers(c *fiber.Ctx) error {
 // @Success         200                 {object}        model.UserResponse
 // @Failure         400                 {object}        httputil.HTTPError
 // @Failure         500                 {object}        httputil.HTTPError
-// @Router          /user [post]
+// @Router          /api/user [post]
 func CreateUser(c *fiber.Ctx) error {
     db := database.DB
     user := new(model.User)
@@ -49,6 +57,15 @@ func CreateUser(c *fiber.Ctx) error {
     return c.JSON(fiber.Map{ "status": "success", "message": "Created User", "data": user})
 }
 
+// @Summary         Get a user
+// @Description     Get a user
+// @Tags            user
+// @Accept          json
+// @Produce         json
+// @Param           userId path string true "User ID"
+// @Success         200                 {object}        model.UserResponse
+// @Failure         404                 {object}        httputil.HTTPError
+// @Router          /api/user/{userId} [get]
 func GetUser(c *fiber.Ctx) error {
     db := database.DB
     var user model.User
@@ -64,6 +81,18 @@ func GetUser(c *fiber.Ctx) error {
     return c.JSON(fiber.Map{ "status": "success", "message": "User Found", "data": user})
 }
 
+
+// @Summary         Update a user
+// @Description     Update a user
+// @Tags            user
+// @Accept          json
+// @Produce         json
+// @Param           userId path string true "User ID"
+// @Param           user body           model.UpdateUser    true    "User object that needs to be updated"
+// @Success         200                 {object}            model.UserResponse
+// @Failure         404                 {object}            httputil.HTTPError
+// @Failure         500                 {object}            httputil.HTTPError
+// @Router          /api/user/{userId} [put]
 func UpdateUser(c *fiber.Ctx) error {
     type updateUser struct {
         Name    string `json:"name"`
@@ -96,6 +125,15 @@ func UpdateUser(c *fiber.Ctx) error {
     return c.JSON(fiber.Map{"status": "success", "message": "Notes Found", "data": user})
 }
 
+// @Summary         Delete a user
+// @Description     Delete a user
+// @Tags            user
+// @Accept          json
+// @Produce         json
+// @Param           userId path string true "User ID"
+// @Success         200                 {object}        httputil.HTTPError
+// @Failure         404                 {object}        httputil.HTTPError
+// @Router          /api/user/{userId} [delete]
 func DeleteUser(c *fiber.Ctx) error {
     db := database.DB
     var user model.User
